@@ -4,5 +4,35 @@
       "title": "ShopTARge23",
       "version": "1.0.0",
       "description": "Shop api"
+  },
+  "paths": {
+      "/products": {
+          "get": {
+              "tags": [
+                  "products"
+              ],
+              "responses": {
+                  "200": {
+                      "content": {
+                          "application/json": {
+                              "schema": {
+                                  "type": "array",
+                                  "items": {
+                                      "type": "string"
+                                  }
+                              },
+                              "examples": {
+                                  "List of products": {
+                                      "value": " [\n 'Macbook m4 max', \n 'Iphone 16 pro max',\n 'Samsung galaxy s21 fe',\n 'Hp Spectre x360 14'\n ]"
+                                  }
+                              }
+                          }
+                      },
+                      "description": "Return a list of products"
+                  }
+              },
+              "description": "Returns list of all products in the API to the requesting user."
+          }
+      }
   }
 }
