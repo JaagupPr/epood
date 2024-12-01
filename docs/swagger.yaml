@@ -1,0 +1,219 @@
+openapi: 3.0.2
+info:
+    title: ShopTARge23
+    version: 1.0.0
+    description: Shop api
+paths:
+    /products:
+        get:
+            tags:
+                - products
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    type: string
+                            examples:
+                                List of products:
+                                    value: |4-
+                                         [
+                                         'Macbook m4 max', 
+                                         'Iphone 16 pro max',
+                                         'Samsung galaxy s21 fe',
+                                         'Hp Spectre x360 14'
+                                         ]
+                    description: Return a list of products
+            summary: Get list of all products from api
+            description: Returns list of all products in the API to the requesting user.
+        post:
+            requestBody:
+                description: Data of Product that the user wants to add
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/error'
+                        examples:
+                            Example of a product:
+                                value:
+                                    -
+                                        error: one or multiple parameters missing
+                required: true
+            tags:
+                - products
+            responses:
+                '201':
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    type: string
+                            examples:
+                                Product that is added:
+                                    value:
+                                        ProductId: 4
+                                        ProductName: Hp Spectre x360 14
+                                        ProductCategory: Computer
+                                        ProductPrice: 1399
+                                        ProductStockQuantity: 1000
+                                        ReleaseDateEU: 10.09.2021
+                    description: Return code 201 to user. if creation of new product was successful
+                '400':
+                    description: 'Return status 400 to the user, if one or multiple of parameters are missing'
+            summary: add new product
+            description: adds a new product into the array
+    '/products/{id}':
+        description: ''
+        get:
+            tags:
+                - products
+            parameters:
+                -
+                    examples:
+                        Example of Id of Product:
+                            value: '1'
+                    name: id
+                    description: Id of product the user has requested
+                    schema:
+                        type: integer
+                    in: path
+                    required: true
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    type: string
+                            examples:
+                                Example of product with details:
+                                    value:
+                                        ProductId: '1'
+                                        ProductName: Macbook m4 max
+                                        ProductCategory: Computer
+                                        ProductPrice: 3499
+                                        ProductStockQuantity: 1024
+                                        ReleaseDateEU: 11.01.2024
+                    description: returns details of the product to the user
+                '404':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/error'
+                            examples:
+                                'Product //list was not found ':
+                                    value:
+                                        -
+                                            error: Product list was not found in product array
+                    description: Returns error 404 to the user if Product with this id is not found
+            summary: Get full details of a product
+            description: Returns full details of a given id product
+        put:
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/product'
+                        examples:
+                            Example of a product:
+                                value:
+                                    ProductId: 4
+                                    ProductName: Hp Spectre x360 14
+                                    ProductCategory: Computer
+                                    ProductPrice: 1399
+                                    ProductStockQuantity: 1000
+                                    ReleaseDateEU: 10.09.2021
+                required: true
+            tags:
+                - products
+            parameters:
+                -
+                    examples:
+                        Id of product:
+                            value: '1'
+                    name: id
+                    description: Id of product to be updated
+                    schema:
+                        type: integer
+                    in: path
+                    required: true
+            responses:
+                '201':
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    type: string
+                            examples:
+                                Example of product with details:
+                                    value:
+                                        ProductId: 1
+                                        ProductName: Macbook m4 max
+                                        ProductCategory: Computer
+                                        ProductPrice: 3499
+                                        ProductStockQuantity: 1024
+                                        ReleaseDateEU: 11.01.2024
+                    description: Returns the modified Product to the user
+                '400':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/error'
+                            examples:
+                                Missing parameters:
+                                    value:
+                                        -
+                                            error: One or multiple parameters are missing
+                    description: |
+                        User has not added required parameters to the modified product
+                '404':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/error'
+                            examples:
+                                Missing parameters:
+                                    value: |-
+                                        {
+                                            {
+                                                "error": "one or multiple parameters are missing"
+                                            }
+                                        }
+                    description: The Product to be updated is not found in the array
+            operationId: id
+            summary: Update a Product
+            description: 'Returns updated product, when modification of a product is successful.'
+        parameters:
+            -
+                examples:
+                    Example of id of product:
+                        value: '1'
+                name: id
+                schema:
+                    type: integer
+                in: path
+                required: true
+components:
+    schemas:
+        error:
+            title: Root Type for error
+            description: ''
+            type: object
+            properties:
+                error:
+                    type: string
+            example:
+                error: error message
+        product:
+            title: Root Type for Product
+            description: Example of a valid product
+            type: integer
+            example:
+                ProductName: Macbook m4 max
+                ProductCategory: Computer
+                ReleaseDateEU: 11.01.2024
