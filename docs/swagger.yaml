@@ -188,12 +188,49 @@ paths:
             operationId: id
             summary: Update a Product
             description: 'Returns updated product, when modification of a product is successful.'
+        delete:
+            requestBody:
+                description: Id of product that is to be deleted
+                content:
+                    application/json:
+                        schema:
+                            type: integer
+                        examples:
+                            Id of Product to be deleted:
+                                value: '1'
+                required: true
+            tags:
+                - products
+            responses:
+                '204':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/error'
+                            examples:
+                                successful error:
+                                    value:
+                                        error: no content
+                    description: 'returned error, in case deletion was successful'
+                '404':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/error'
+                            examples:
+                                'Product /w+ was not found:':
+                                    value:
+                                        error: Product not found
+                    description: Product with this id was not found
+            summary: Delete a specific product
+            description: Deletes a product from the array based on given id
         parameters:
             -
                 examples:
                     Example of id of product:
                         value: '1'
                 name: id
+                description: Id of product the user has requested
                 schema:
                     type: integer
                 in: path

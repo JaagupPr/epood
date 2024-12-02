@@ -110,7 +110,17 @@ app.put("/products/:id", (req, res) => {
   res.status(201)
     .location(`${getBaseURL(req)}/products/${req.params.id}`)
     .send(product);
-});
+})
+
+app.delete('/products/:id', (req, res) => {
+  if(typeof products[req.params.id - 1] === 'undefined') {
+    return res.status(404).send({ error: 'Product not found' });
+  }
+products.splice(req.params.id - 1, 1);
+
+res.status(204).send({error: "No Content"});
+
+})
 
 app.listen(port, () => {
   console.log(`Api on saadaval aadressil: http://localhost:${port}`);
