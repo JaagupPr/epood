@@ -1,4 +1,4 @@
-Product api for registering products, which users may own.
+E-store api for registering products, which users may own.
 -----------------------------------------------------------
 please see below for instructions on
 how to run, and where its api and trello team resources are
