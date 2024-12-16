@@ -178,12 +178,9 @@ paths:
                                 $ref: '#/components/schemas/error'
                             examples:
                                 Missing parameters:
-                                    value: |-
-                                        {
-                                            {
-                                                "error": "one or multiple parameters are missing"
-                                            }
-                                        }
+                                    value:
+                                        -
+                                            error: one or multiple parameters are missing
                     description: The Product to be updated is not found in the array
             operationId: id
             summary: Update a Product
@@ -201,6 +198,17 @@ paths:
                 required: true
             tags:
                 - products
+            parameters:
+                -
+                    examples:
+                        Example of id of product:
+                            value: '1'
+                    name: id
+                    description: Id of product the user has requested
+                    schema:
+                        type: integer
+                    in: path
+                    required: true
             responses:
                 '204':
                     content:
@@ -235,6 +243,505 @@ paths:
                     type: integer
                 in: path
                 required: true
+    /users:
+        get:
+            tags:
+                - users
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    type: string
+                            examples:
+                                List of users:
+                                    value: |4-
+                                         [
+                                         'Gordon Freeman', 
+                                         'David attenborough',
+                                         'Elon Musk',
+                                         'Mark Zuckerberg'
+                                         ]
+                    description: 'Return status code 200 to the user, with list of Users'
+            summary: Get list of all users from api
+            description: |
+                Returns a list of all users in the system
+        post:
+            requestBody:
+                description: Data of the user to be added
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/error'
+                        examples:
+                            Example of  a user:
+                                value:
+                                    -
+                                        error: one or multiple parameters missing
+                required: true
+            tags:
+                - users
+            responses:
+                '201':
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    type: string
+                            examples:
+                                User that is added:
+                                    value:
+                                        UserID: 4
+                                        FirstName: Mark
+                                        LastName: Zuckerberg
+                                        Email: Mark.Zuckerberg@gmail.com
+                                        PhoneNumber: '+44777123234'
+                                        Address: 'Palo Alto, California, USA'
+                                        Usertype: Seller
+                                        SecureLevel: 0
+                                        LevelKey: 1-0
+                    description: 'Return code 201, if user was added successfully'
+                '400':
+                    description: 'Return code 400, if request is missing a required data field'
+            summary: Add a new user
+            description: Adds a new user to the system.
+    '/users/{Id}':
+        get:
+            tags:
+                - users
+            parameters:
+                -
+                    examples:
+                        Example of id of user:
+                            value: '1'
+                    name: Id
+                    description: |
+                        id of the user to retrieve.
+                    schema:
+                        type: integer
+                    in: path
+                    required: true
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    type: string
+                            examples:
+                                Example of Id of user:
+                                    value:
+                                        UserID: 4
+                                        FirstName: Mark
+                                        LastName: Zuckerberg
+                                        Email: Mark.Zuckerberg@gmail.com
+                                        PhoneNumber: '+44777123234'
+                                        Address: 'Palo Alto, California, USA'
+                                        Usertype: Seller
+                                        SecureLevel: 0
+                                        LevelKey: 1-0
+                    description: Returns a single user with details by its ID.
+                '400':
+                    description: 'Return code 400, if ID of User is not given'
+                '404':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/error'
+                            examples:
+                                User not found:
+                                    value:
+                                        error: user not found
+                    description: 'Returns error 404, if user by that ID does not exist'
+            summary: Get full details of a user
+            description: Returns details of the user by their ID.
+        put:
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/user'
+                        examples:
+                            Example of a user:
+                                value:
+                                    UserID: 4
+                                    FirstName: Mark
+                                    LastName: Zuckerberk
+                                    Email: Mark.Zuckerberg@gmail.com
+                                    PhoneNumber: '+44777123234'
+                                    Address: 'Palo Alto, California, USA'
+                                    UserType: Seller
+                                    SecureLevel: 0
+                                    LevelKey: 1-0
+                required: true
+            tags:
+                - users
+            parameters:
+                -
+                    examples:
+                        Id of user:
+                            value: '1'
+                    name: Id
+                    description: Id of user to be updated
+                    schema:
+                        type: integer
+                    in: path
+                    required: true
+            responses:
+                '201':
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    type: string
+                            examples:
+                                Example of a user:
+                                    value: |-
+                                        {
+                                            "UserID": 4,
+                                            "FirstName": "Mark",
+                                            "LastName": "Zuckerberk",
+                                            "Email": "Mark.Zuckerberg@gmail.com",
+                                            "PhoneNumber": "+44777123234",
+                                            "Address": "Palo Alto, California, USA",
+                                            "UserType": "Seller"
+                                            "SecureLevel": 0,
+                                            "LevelKey": "1-0"
+                                        }
+                    description: 'Returns the modified user '
+                '400':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/error'
+                            examples:
+                                Missing parameters:
+                                    value:
+                                        -
+                                            error: One or multiple parameters are missing
+                    description: the modified user does not have the required parameters added.
+                '404':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/error'
+                            examples:
+                                Missing parameters:
+                                    value:
+                                        -
+                                            error: one or multiple parameters are missing
+                    description: The user to be updated is not found.
+            operationId: id
+            summary: Update a user
+            description: 'Returns updated user, when modification of user is successful'
+        delete:
+            requestBody:
+                description: Id of user that is going to be deleted
+                content:
+                    application/json:
+                        schema:
+                            type: integer
+                        examples:
+                            Id of user to be deleted:
+                                value: Id
+                required: true
+            tags:
+                - users
+            parameters:
+                -
+                    examples:
+                        Example of Id of user:
+                            value: '1'
+                    name: Id
+                    description: Id of user the system has requested
+                    schema:
+                        type: integer
+                    in: path
+                    required: true
+            responses:
+                '204':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/error'
+                            examples:
+                                Successful error:
+                                    value:
+                                        error: no content
+                    description: return error in case deletion of user was successful
+                '404':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/error'
+                            examples:
+                                User not found:
+                                    value:
+                                        error: Product does not exist
+                    description: User with this id was not found
+            summary: Delete a specific user
+            description: Deletes a user from the system based in given id
+        parameters:
+            -
+                examples:
+                    Example of id of user:
+                        value: '1'
+                name: Id
+                description: Id of user that the system has requested
+                schema:
+                    type: integer
+                in: path
+                required: true
+    /orders:
+        description: ''
+        get:
+            tags:
+                - orders
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    type: string
+                            examples:
+                                List of orders:
+                                    value: |4-
+                                         [
+                                         '2024-12-10', 
+                                         '2024-12-12',
+                                         '2024-02-10',
+                                         '2024-01-09'
+                                         ]
+                    description: Return a list of all orders in the system.
+            summary: Get list of all orders
+            description: Returns a list of all orders in the system.
+        post:
+            requestBody:
+                description: Data of the order to be added
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/error'
+                        examples:
+                            Example of a order:
+                                value:
+                                    -
+                                        error: one or multiple parameters missing
+                required: true
+            tags:
+                - orders
+            responses:
+                '201':
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    type: string
+                            examples:
+                                Orders that have been added:
+                                    value:
+                                        OrderID: 1
+                                        BuyerID: 1
+                                        OrderDate: '2024-12-10'
+                                        TotalAmount: 1459
+                                        OrderStatus: Completed
+                    description: 'Return code 201, if order was added successfully'
+                '400':
+                    description: 'Return status 400, if request is missing parameters'
+                '404':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/error'
+                            examples:
+                                Order was not found:
+                                    value:
+                                        error: order not found
+                    description: 'Return status code 404, if one of the orders is missing'
+            summary: Add a new order
+            description: Adds a new order to the system.
+    '/orders/{Id}':
+        get:
+            tags:
+                - orders
+            parameters:
+                -
+                    examples:
+                        Example of id of order:
+                            value: '1'
+                    name: Id
+                    description: id of order the system has requested
+                    schema:
+                        type: integer
+                    in: path
+                    required: true
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    type: string
+                            examples:
+                                Example of order with details:
+                                    value:
+                                        OrderID: 3
+                                        BuyerID: 3
+                                        OrderDate: '2024-02-10'
+                                        TotalAmount: 5321
+                                        OrderStatus: Pending
+                    description: returns code 200 to user if order exists.
+                '404':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/error'
+                            examples:
+                                Order list was not found:
+                                    value:
+                                        -
+                                            error: order was not found in the system
+                    description: 'Returns error 404, if order with this id does not exist'
+            summary: Get full details of order
+            description: Returns full details of a given order
+        put:
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/order'
+                        examples:
+                            Example of order with details:
+                                value:
+                                    OrderID: 3
+                                    BuyerID: 3
+                                    OrderDate: '2024-02-10'
+                                    TotalAmount: 3499
+                                    OrderStatus: Pending
+                required: true
+            tags:
+                - orders
+            parameters:
+                -
+                    examples:
+                        Id of order:
+                            value: '1'
+                    name: Id
+                    description: Id of order to be updated
+                    schema:
+                        type: integer
+                    in: path
+                    required: true
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    type: string
+                            examples:
+                                Example of order with details:
+                                    value:
+                                        OrderID: 2
+                                        BuyerID: 2
+                                        OrderDate: '2024-12-12'
+                                        TotalAmount: 2534
+                                        OrderStatus: Pending
+                    description: Returns the modified order to the system
+                '400':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/error'
+                            examples:
+                                Missing parameters:
+                                    value:
+                                        -
+                                            error: One or multiple parameters are missing
+                    description: |4
+                         the system has not added required parameters to the modified order
+                '404':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/error'
+                            examples:
+                                Missing parameters:
+                                    value:
+                                        -
+                                            error: One or multiple parameters are missing
+                    description: The order to be updated is not found in the system
+            operationId: id
+            summary: Update a order
+            description: 'Return updated order, when modification of order is successful'
+        delete:
+            requestBody:
+                description: Id of order that is about to be deleted
+                content:
+                    application/json:
+                        schema:
+                            type: integer
+                        examples:
+                            Id of order that is to be deleted:
+                                value: Id
+                required: true
+            tags:
+                - orders
+            parameters:
+                -
+                    examples:
+                        Example of id of product:
+                            value: '1'
+                    name: Id
+                    description: id of order the system has requested
+                    schema:
+                        type: integer
+                    in: path
+                    required: true
+            responses:
+                '204':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/error'
+                            examples:
+                                Successful error:
+                                    value:
+                                        error: no content
+                    description: 'returned error, in case deletion of a order was successful'
+                '404':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/error'
+                            examples:
+                                Order was not found:
+                                    value:
+                                        error: Order was not found
+                    description: Returns code 404 if order with this id is not found
+            summary: Delete a specific order
+            description: Deletes a order from the system based on given id
+        parameters:
+            -
+                examples:
+                    Example of id of order:
+                        value: '1'
+                name: Id
+                description: id of order the system has requested
+                schema:
+                    type: integer
+                in: path
+                required: true
 components:
     schemas:
         error:
@@ -254,3 +761,25 @@ components:
                 ProductName: Macbook m4 max
                 ProductCategory: Computer
                 ReleaseDateEU: 11.01.2024
+        user:
+            title: Root Type for User
+            description: Example of valid user
+            type: integer
+            example:
+                UserID: 4
+                FirstName: Mark
+                LastName: Zuckerberk
+                Email: Mark.Zuckerberg@gmail.com
+                PhoneNumber: '+44777123234'
+                Address: 'Palo Alto, California, USA'
+                UserType: Seller
+        order:
+            title: Root Type for Order
+            description: Example of valid order.
+            type: integer
+            example:
+                OrderID: 1
+                BuyerID: 1
+                OrderDate: '2024-12-10'
+                TotalAmount: 1459
+                OrderStatus: Completed
