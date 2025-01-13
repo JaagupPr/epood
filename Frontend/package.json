@@ -4,9 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-     "dev": "",
-    "start": "concurrently \"cd BideoGam-api && nodemon .\" \"cd Frontend\\frontend && npm run dev\""
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",

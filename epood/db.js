@@ -19,10 +19,13 @@ const db = {}
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 db.products = require("./models/product")(sequelize, DataTypes);
+db.users = require("./models/user")(sequelize, DataTypes);
+db.orders = require("./models/order")(sequelize, DataTypes);
+
 
 const sync = (async () => {
     await sequelize.sync({ alter: true});
     console.log("models have been synchronised successfully")
 });
 
-module.exports = {db, sync};
+module.exports = {db, sync};    
