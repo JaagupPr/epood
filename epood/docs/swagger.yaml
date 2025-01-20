@@ -34,12 +34,17 @@ paths:
                 content:
                     application/json:
                         schema:
-                            $ref: '#/components/schemas/error'
+                            $ref: '#/components/schemas/product'
                         examples:
                             Example of a product:
                                 value:
-                                    -
-                                        error: one or multiple parameters missing
+                                    ProductName: Hp Spectre x360 14
+                                    ProductCategory: Laptop
+                                    ProductPrice: '1399.99'
+                                    ProductDescription: a pc
+                                    ImageURL: >-
+                                        https://vsf-api.klick.ee/img/806/1000/resize/m/a/macbook_air_13_in_space_gray_pdp_image_position-1__wwen_2.jpg
+                                    ReleaseDateEU: '2024-01-11'
                 required: true
             tags:
                 - products
@@ -56,12 +61,22 @@ paths:
                                     value:
                                         ProductId: 4
                                         ProductName: Hp Spectre x360 14
-                                        ProductCategory: Computer
-                                        ProductPrice: 1399
-                                        ProductStockQuantity: 1000
-                                        ReleaseDateEU: 10.09.2021
+                                        ProductCategory: Laptop
+                                        ProductPrice: 1399.99
+                                        ProductDescription: a pc
+                                        ImageURL: >-
+                                            https://vsf-api.klick.ee/img/806/1000/resize/m/a/macbook_air_13_in_space_gray_pdp_image_position-1__wwen_2.jpg
+                                        ReleaseDateEU: 11.01.2024
                     description: Return code 201 to user. if creation of new product was successful
                 '400':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/error'
+                            examples:
+                                Missing parameters error:
+                                    value:
+                                        error: One or multiple parameters are missing
                     description: 'Return status 400 to the user, if one or multiple of parameters are missing'
             summary: add new product
             description: adds a new product into the array
@@ -96,7 +111,9 @@ paths:
                                         ProductName: Macbook m4 max
                                         ProductCategory: Computer
                                         ProductPrice: 3499
-                                        ProductStockQuantity: 1024
+                                        ProductDescription: a macbook
+                                        ImageURL: >-
+                                            https://vsf-api.klick.ee/img/806/1000/resize/m/a/macbook_air_13_in_space_gray_pdp_image_position-1__wwen_2.jpg
                                         ReleaseDateEU: 11.01.2024
                     description: returns details of the product to the user
                 '404':
@@ -125,7 +142,8 @@ paths:
                                     ProductName: Hp Spectre x360 14
                                     ProductCategory: Computer
                                     ProductPrice: 1399
-                                    ProductStockQuantity: 1000
+                                    ProductDescription: a computer
+                                    ImageURL: 'https:'
                                     ReleaseDateEU: 10.09.2021
                 required: true
             tags:
@@ -156,7 +174,9 @@ paths:
                                         ProductName: Macbook m4 max
                                         ProductCategory: Computer
                                         ProductPrice: 3499
-                                        ProductStockQuantity: 1024
+                                        ProductDescription: a pc
+                                        ImageURL: >-
+                                            https://vsf-api.klick.ee/img/806/1000/resize/m/a/macbook_air_13_in_space_gray_pdp_image_position-1__wwen_2.jpg
                                         ReleaseDateEU: 11.01.2024
                     description: Returns the modified Product to the user
                 '400':
@@ -300,11 +320,14 @@ paths:
                                         Email: Mark.Zuckerberg@gmail.com
                                         PhoneNumber: '+44777123234'
                                         Address: 'Palo Alto, California, USA'
-                                        Usertype: Seller
-                                        SecureLevel: 0
-                                        LevelKey: 1-0
+                                        UserType: Seller
+                                        Password: Jicnaoxqp012o
                     description: 'Return code 201, if user was added successfully'
                 '400':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/error'
                     description: 'Return code 400, if request is missing a required data field'
             summary: Add a new user
             description: Adds a new user to the system.
@@ -341,11 +364,18 @@ paths:
                                         Email: Mark.Zuckerberg@gmail.com
                                         PhoneNumber: '+44777123234'
                                         Address: 'Palo Alto, California, USA'
-                                        Usertype: Seller
-                                        SecureLevel: 0
-                                        LevelKey: 1-0
+                                        UserType: Seller
+                                        Password: Jicnaoxqp012o
                     description: Returns a single user with details by its ID.
                 '400':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/error'
+                            examples:
+                                No id of user given:
+                                    value:
+                                        error: user id not given
                     description: 'Return code 400, if ID of User is not given'
                 '404':
                     content:
@@ -375,8 +405,6 @@ paths:
                                     PhoneNumber: '+44777123234'
                                     Address: 'Palo Alto, California, USA'
                                     UserType: Seller
-                                    SecureLevel: 0
-                                    LevelKey: 1-0
                 required: true
             tags:
                 - users
@@ -401,18 +429,15 @@ paths:
                                     type: string
                             examples:
                                 Example of a user:
-                                    value: |-
-                                        {
-                                            "UserID": 4,
-                                            "FirstName": "Mark",
-                                            "LastName": "Zuckerberk",
-                                            "Email": "Mark.Zuckerberg@gmail.com",
-                                            "PhoneNumber": "+44777123234",
-                                            "Address": "Palo Alto, California, USA",
-                                            "UserType": "Seller"
-                                            "SecureLevel": 0,
-                                            "LevelKey": "1-0"
-                                        }
+                                    value:
+                                        UserID: 4
+                                        FirstName: Mark
+                                        LastName: Zuckerberk
+                                        Email: Mark.Zuckerberg@gmail.com
+                                        PhoneNumber: '+44777123234'
+                                        Address: 'Palo Alto, California, USA'
+                                        UserType: Seller
+                                        Password: Jicnaoxqp012o
                     description: 'Returns the modified user '
                 '400':
                     content:
@@ -507,17 +532,15 @@ paths:
                     content:
                         application/json:
                             schema:
-                                type: array
-                                items:
-                                    type: string
+                                type: string
                             examples:
                                 List of orders:
                                     value: |4-
                                          [
-                                         '2024-12-10', 
-                                         '2024-12-12',
-                                         '2024-02-10',
-                                         '2024-01-09'
+                                         '1', 
+                                         '2',
+                                         '3',
+                                         '4'
                                          ]
                     description: Return a list of all orders in the system.
             summary: Get list of all orders
@@ -548,11 +571,12 @@ paths:
                             examples:
                                 Orders that have been added:
                                     value:
-                                        OrderID: 1
-                                        BuyerID: 1
-                                        OrderDate: '2024-12-10'
+                                        UserID: 1
+                                        OrderDate: 11.01.2024
                                         TotalAmount: 1459
                                         OrderStatus: Completed
+                                        ShippingAddress: '1234 Elm Street, New York, China'
+                                        PaymentStatus: Paid
                     description: 'Return code 201, if order was added successfully'
                 '400':
                     description: 'Return status 400, if request is missing parameters'
@@ -594,11 +618,12 @@ paths:
                             examples:
                                 Example of order with details:
                                     value:
-                                        OrderID: 3
-                                        BuyerID: 3
-                                        OrderDate: '2024-02-10'
-                                        TotalAmount: 5321
-                                        OrderStatus: Pending
+                                        UserID: 1
+                                        OrderDate: 11.01.2024
+                                        TotalAmount: 1459
+                                        OrderStatus: Completed
+                                        ShippingAddress: '1234 Elm Street, New York, China'
+                                        PaymentStatus: Paid
                     description: returns code 200 to user if order exists.
                 '404':
                     content:
@@ -622,11 +647,12 @@ paths:
                         examples:
                             Example of order with details:
                                 value:
-                                    OrderID: 3
-                                    BuyerID: 3
-                                    OrderDate: '2024-02-10'
-                                    TotalAmount: 3499
-                                    OrderStatus: Pending
+                                    UserID: 1
+                                    OrderDate: 11.01.2024
+                                    TotalAmount: 1459
+                                    OrderStatus: Completed
+                                    ShippingAddress: '1234 Elm Street, New York, China'
+                                    PaymentStatus: Paid
                 required: true
             tags:
                 - orders
@@ -652,11 +678,12 @@ paths:
                             examples:
                                 Example of order with details:
                                     value:
-                                        OrderID: 2
-                                        BuyerID: 2
-                                        OrderDate: '2024-12-12'
-                                        TotalAmount: 2534
-                                        OrderStatus: Pending
+                                        UserID: 1
+                                        OrderDate: 11.01.2024
+                                        TotalAmount: 1459
+                                        OrderStatus: Completed
+                                        ShippingAddress: '1234 Elm Street, New York, China'
+                                        PaymentStatus: Paid
                     description: Returns the modified order to the system
                 '400':
                     content:
@@ -715,10 +742,10 @@ paths:
                             schema:
                                 $ref: '#/components/schemas/error'
                             examples:
-                                Successful error:
+                                error:
                                     value:
                                         error: no content
-                    description: 'returned error, in case deletion of a order was successful'
+                    description: Returns error incase deletion was successful
                 '404':
                     content:
                         application/json:
@@ -747,6 +774,8 @@ components:
         error:
             title: Root Type for error
             description: ''
+            required:
+                - error
             type: object
             properties:
                 error:
@@ -754,32 +783,133 @@ components:
             example:
                 error: error message
         product:
-            title: Root Type for Product
             description: Example of a valid product
-            type: integer
+            required:
+                - ProductCategory
+                - ProductName
+                - ProductPrice
+                - ReleaseDateEU
+                - ProductId
+                - ProductDescription
+                - ImageURL
+            type: object
+            properties:
+                ProductName:
+                    description: ' The name of the product'
+                    type: string
+                ProductCategory:
+                    description: ' The category of the product'
+                    type: string
+                ProductPrice:
+                    format: float
+                    description: ' The price of the product in EUR'
+                    type: number
+                ReleaseDateEU:
+                    format: date
+                    description: ' The release date of the product in EU format'
+                    type: string
+                ProductId:
+                    description: ' Id of the product'
+                    type: integer
+                ProductDescription:
+                    description: description of product
+                    type: string
+                ImageURL:
+                    description: Url to product image
+                    type: string
             example:
+                ProductId: '1'
                 ProductName: Macbook m4 max
                 ProductCategory: Computer
+                ProductPrice: 3499
+                ProductDescription: a macbook
+                ImageURL: >-
+                    https://vsf-api.klick.ee/img/806/1000/resize/m/a/macbook_air_13_in_space_gray_pdp_image_position-1__wwen_2.jpg
                 ReleaseDateEU: 11.01.2024
         user:
-            title: Root Type for User
             description: Example of valid user
-            type: integer
-            example:
-                UserID: 4
-                FirstName: Mark
-                LastName: Zuckerberk
-                Email: Mark.Zuckerberg@gmail.com
-                PhoneNumber: '+44777123234'
-                Address: 'Palo Alto, California, USA'
-                UserType: Seller
+            required:
+                - FirstName
+                - UserID
+                - LastName
+                - Email
+                - PhoneNumber
+                - Address
+                - UserType
+                - Password
+            type: object
+            properties:
+                UserID:
+                    description: ' The unique identifier of the user'
+                    type: integer
+                FirstName:
+                    description: ' The first name of the user'
+                    type: string
+                LastName:
+                    description: ' The last name of the user'
+                    type: string
+                Email:
+                    format: email
+                    description: ' The email address of the user'
+                    type: string
+                PhoneNumber:
+                    description: ' The phone number of the user'
+                    type: string
+                Address:
+                    description: ' The home address of the user'
+                    type: string
+                UserType:
+                    description: ' The type of the user'
+                    type: string
+                Password:
+                    format: password
+                    description: ' Users password for authentication'
+                    type: string
+            example: |-
+                {
+                    "UserID": 4,
+                    "FirstName": "Mark",
+                    "LastName": "Zuckerberk",
+                    "Email": "Mark.Zuckerberg@gmail.com",
+                    "PhoneNumber": "+44777123234",
+                    "Address": "Palo Alto, California, USA",
+                    "UserType": "Seller"
+                    "Password": "dlkowekw32"
+                }
         order:
-            title: Root Type for Order
             description: Example of valid order.
-            type: integer
+            required:
+                - UserID
+                - OrderDate
+                - TotalAmount
+                - OrderStatus
+                - ShippingAddress
+                - PaymentStatus
+            type: object
+            properties:
+                UserID:
+                    description: Id of a user
+                    type: string
+                OrderDate:
+                    format: date-time
+                    description: Date of a order
+                    type: string
+                TotalAmount:
+                    description: ''
+                    type: string
+                OrderStatus:
+                    description: ''
+                    type: string
+                ShippingAddress:
+                    description: ''
+                    type: string
+                PaymentStatus:
+                    description: ''
+                    type: string
             example:
-                OrderID: 1
-                BuyerID: 1
-                OrderDate: '2024-12-10'
+                UserID: 1
+                OrderDate: 11.01.2024
                 TotalAmount: 1459
                 OrderStatus: Completed
+                ShippingAddress: '1234 Elm Street, New York, China'
+                PaymentStatus: Paid

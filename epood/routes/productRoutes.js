@@ -1,11 +1,13 @@
-const Controller = require('../controllers/ProductsController');
+const ProductsController = require('../controllers/ProductsController');
 
 module.exports = (app) => {
     app.route("/products")
         .get(ProductsController.getAll)
-        .post(ProductsController.create)
+        .post(ProductsController.create);
+    
     app.route("/products/:id")
         .get(ProductsController.getById)
         .put(ProductsController.editById)
-        .delete(ProductsController.deleteById)
-}
+        .delete(ProductsController.deleteById);
+};
+

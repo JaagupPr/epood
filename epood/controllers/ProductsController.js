@@ -14,19 +14,27 @@ exports.getAll = async (req, res) => {
 };
 
 exports.getById = async (req, res) => {
+  const idNumber = parseInt(req.params.id);
+
+  if (isNaN(idNumber)) {
+    return res.status(400).send({ error: "Invalid product ID." });
+  }
+
   try {
-    const product = await getProduct(req, res);
-    if (!product) return;
-    res.send(product);
+    const product = await db.products.findByPk(idNumber);
+    if (!product) {
+      return res.status(404).send({ error: "Product not found." });
+    }
+    return res.status(200).send(product);
   } catch (err) {
-    res.status(400).send({ error: "An error occurred while fetching the product." });
+    return res.status(400).send({ error: "An error occurred while fetching the product." });
   }
 };
 
 exports.create = async (req, res) => {
-  const { ProductName, ProductCategory, ProductPrice, ProductStockQuantity, ReleaseDateEU } = req.body;
+  const { ProductName, ProductCategory, ProductPrice, ProductDescription, ImageURL,  ReleaseDateEU } = req.body;
 
-  if (!ProductName || !ProductCategory || !ProductPrice || !ProductStockQuantity || !ReleaseDateEU) {
+  if (!ProductName || !ProductCategory || !ProductPrice || !ProductDescription || !ImageURL || !ReleaseDateEU) {
     return res.status(400).send({ error: "One or multiple parameters are missing" });
   }
 
@@ -35,22 +43,25 @@ exports.create = async (req, res) => {
       ProductName,
       ProductCategory,
       ProductPrice,
-      ProductStockQuantity,
+      ProductDescription,
+      ImageURL,
       ReleaseDateEU,
     });
 
     res.status(201)
       .location(`${Utils.getBaseURL(req)}/products/${newProduct.ProductID}`)
-      .send({ ProductID: newProduct.ProductID });
+      .send(newProduct);
   } catch (err) {
-    res.status(400).send({ error: "An error occurred while creating the product." });
+    console.error(err);
+    res.status(400).send({ error: "An error occurred while creating the product.", details: err.message });
   }
 };
 
-exports.editById = async (req, res) => {
-  const { ProductName, ProductCategory, ProductPrice, ProductStockQuantity, ReleaseDateEU } = req.body;
 
-  if (!ProductName || !ProductCategory || !ProductPrice || !ProductStockQuantity || !ReleaseDateEU) {
+exports.editById = async (req, res) => {
+  const { ProductName, ProductCategory, ProductPrice, ProductDescription, ImageURL, ReleaseDateEU } = req.body;
+
+  if (!ProductName || !ProductCategory || !ProductPrice || !ProductDescription || !ImageURL || !ReleaseDateEU) {
     return res.status(400).send({ error: "One or multiple parameters are missing" });
   }
 
@@ -61,8 +72,10 @@ exports.editById = async (req, res) => {
     product.ProductName = ProductName;
     product.ProductCategory = ProductCategory;
     product.ProductPrice = ProductPrice;
-    product.ProductStockQuantity = ProductStockQuantity;
+    product.ProductDescription = ProductDescription;
+    product.ImageURL = ImageURL;
     product.ReleaseDateEU = ReleaseDateEU;
+
 
     await product.save();
 
@@ -86,6 +99,8 @@ exports.deleteById = async (req, res) => {
   }
 };
 
+
+
 const getProduct = async (req, res) => {
   const idNumber = parseInt(req.params.id);
   if (isNaN(idNumber)) {
@@ -105,3 +120,4 @@ const getProduct = async (req, res) => {
     return null;
   }
 };
+

@@ -11,24 +11,31 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
+      ProductCategory: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      ProductPrice: {
+        type: DataTypes.DECIMAL(10, 2),
+        allowNull: false,
+      },
+      ProductDescription: {
+        type: DataTypes.TEXT,
+        allowNull: false,
+      },
+      ImageURL: {
+        type: DataTypes.STRING(500),
+        allowNull: false,
+      },
       ReleaseDateEU: {
         type: DataTypes.DATEONLY,
         allowNull: true,
-      },
-      ProductStockQuantity: {
-        type: DataTypes.DECIMAL,
-        allowNull: false,
-        validate: {
-          min: 0,
-        },
       },
     },
     {
       timestamps: false,
     }
   );
-
-  console.log(Product === sequelize.models.Product);
 
   return Product;
 };
