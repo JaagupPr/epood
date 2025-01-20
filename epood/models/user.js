@@ -5,12 +5,35 @@ module.exports = (sequelize, DataTypes) => {
       autoIncrement: true,
       primaryKey: true,
     },
-    FirstName: { type: DataTypes.STRING, allowNull: false },
-    LastName: { type: DataTypes.STRING, allowNull: false },
-    Email: { type: DataTypes.STRING, allowNull: false, unique: true },
-    PhoneNumber: { type: DataTypes.STRING, allowNull: false },
-    Address: { type: DataTypes.STRING, allowNull: false },
-    UserType: { type: DataTypes.ENUM("Buyer", "Seller"), allowNull: false },
+    FirstName: { 
+      type: DataTypes.STRING, 
+      allowNull: false 
+    },
+    LastName: { 
+      type: DataTypes.STRING, 
+      allowNull: false 
+    },
+    Email: { 
+      type: DataTypes.STRING, 
+      allowNull: false, 
+      unique: true 
+    },
+    PhoneNumber: { 
+      type: DataTypes.STRING, 
+      allowNull: false 
+    },
+    Address: { 
+      type: DataTypes.STRING, 
+      allowNull: false 
+    },
+    UserType: { 
+      type: DataTypes.ENUM("Buyer", "Seller"), 
+      allowNull: false 
+    },
+    Password: { 
+      type: DataTypes.STRING, 
+      allowNull: false 
+    }
   });
 
   return User;

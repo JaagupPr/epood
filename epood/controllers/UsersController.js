@@ -1,19 +1,14 @@
 const { db } = require("../db");
+const Utils = require("./utils");
 
-exports.getAllUsers = async (req, res) => {
+exports.getAll = async (req, res) => {
   const users = await db.users.findAll();
   res.send(users);
 };
 
-exports.getUserById = async (req, res) => {
-  const user = await db.users.findByPk(req.params.id);
-  if (!user) return res.status(404).send({ error: "User not found" });
-  res.send(user);
-};
-
-exports.createUser = async (req, res) => {
-  const { FirstName, LastName, Email, PhoneNumber, Address, UserType } = req.body;
-  if (!FirstName || !LastName || !Email || !PhoneNumber || !Address || !UserType) {
+exports.create = async (req, res) => {
+  const { FirstName, LastName, Email, PhoneNumber, Address, UserType, Password } = req.body;
+  if (!FirstName || !LastName || !Email || !PhoneNumber || !Address || !UserType ||!Password) {
     return res.status(400).send({ error: "Missing required fields" });
   }
 
@@ -24,25 +19,38 @@ exports.createUser = async (req, res) => {
     PhoneNumber,
     Address,
     UserType,
+    Password,
   });
-  res.status(201).send(newUser);
+
+  res.status(201)
+    .location(`${Utils.getBaseURL(req)}/users/${newUser.UserID}`)
+    .send(newUser);
 };
 
-exports.updateUserById = async (req, res) => {
-  const user = await db.users.findByPk(req.params.id);
+exports.getById = async (req, res) => {
+  const user = await db.users.findByPk(req.params.UserID);
   if (!user) return res.status(404).send({ error: "User not found" });
-
-  const { FirstName, LastName, Email, PhoneNumber, Address, UserType } = req.body;
-  if (!FirstName || !LastName || !Email || !PhoneNumber || !Address || !UserType) {
-    return res.status(400).send({ error: "Missing required fields" });
-  }
-
-  user.set({ FirstName, LastName, Email, PhoneNumber, Address, UserType });
-  await user.save();
   res.send(user);
 };
 
-exports.deleteUserById = async (req, res) => {
+exports.editById = async (req, res) => {
+  const user = await db.users.findByPk(req.params.UserID);
+  if (!user) return res.status(404).send({ error: "User not found" });
+
+  const { FirstName, LastName, Email, PhoneNumber, Address, UserType } = req.body;
+  if (!FirstName || !LastName || !Email || !PhoneNumber || !Address || !UserType ||!Password) {
+    return res.status(400).send({ error: "Missing required fields" });
+  }
+
+  user.set({ FirstName, LastName, Email, PhoneNumber, Address, UserType, Password });
+  await user.save();
+
+  res.status(200)
+     .location(`${Utils.getBaseURL(req)}/users/${user.UserID}`)
+     .send(user);
+};
+
+exports.deleteById = async (req, res) => {
   const user = await db.users.findByPk(req.params.id);
   if (!user) return res.status(404).send({ error: "User not found" });
   await user.destroy();

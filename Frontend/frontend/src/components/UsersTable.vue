@@ -17,8 +17,8 @@ export default {
                 <th>PhoneNumber</th>
                 <th>Address</th>
                 <th>UserType</th>
-                <th>SecureLevel</th>
-                <th>LevelKey</th>
+                <th>Password</th>
+
             </tr>
         </thead>
         <tbody>
@@ -29,8 +29,7 @@ export default {
                 <td>{{ item.PhoneNumber }}</td>
                 <td>{{ item.Address }}</td>
                 <td>{{ item.UserType }}</td>
-                <td>{{ item.SecureLevel }}</td>
-                <td>{{ item.LevelKey }}</td>
+                <td>{{ item.Password }}</td>
 
             </tr>
         </tbody>
