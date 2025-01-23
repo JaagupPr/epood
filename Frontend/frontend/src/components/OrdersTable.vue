@@ -2,7 +2,7 @@
 export default {
     name: "OrdersTable",
     props: {
-        items: Array
+        items: Object
     }
 }
 </script>
@@ -11,23 +11,25 @@ export default {
     <table class="table table-striped">
         <thead class="table-dark">
             <tr>
-                <th>OrderID</th>
-                <th>BuyerID</th>
+                <th>UserID</th>
                 <th>OrderDate</th>
                 <th>TotalAmount</th>
                 <th>OrderStatus</th>
+                <th>ShippingAddress</th>
+                <th>PaymentStatus</th>
+
 
 
             </tr>
         </thead>
         <tbody>
-            <tr v-for="item in items" :key="item.ProductID">
-                <td>{{ item.OrderID }}</td>
-                <td>{{ item.BuyerID }}</td>
+            <tr v-for="item in items" :key="item.OrderID">
+                <td>{{ item.UserID }}</td>
                 <td>{{ item.OrderDate }}</td>
                 <td>{{ item.TotalAmount }}</td>
                 <td>{{ item.OrderStatus }}</td>
-                <td>{{ item.BuyerID }}</td>
+                <td>{{ item.ShippingAddress }}</td>
+                <td>{{ item.PaymentStatus }}</td>
 
             </tr>
         </tbody>

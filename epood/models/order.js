@@ -5,18 +5,43 @@ module.exports = (sequelize, DataTypes) => {
       autoIncrement: true,
       primaryKey: true,
     },
-    BuyerID: {
+    UserID: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      references: { model: "Users", key: "UserID" },
+      references: {
+        model: 'Users',
+        key: 'UserID',
+      }
     },
-    OrderDate: { type: DataTypes.DATEONLY, allowNull: false },
-    TotalAmount: { type: DataTypes.DECIMAL, allowNull: false },
-    OrderStatus: {
-      type: DataTypes.ENUM("Pending", "Completed"),
+    OrderDate: {
+      type: DataTypes.DATE,
       allowNull: false,
     },
+    TotalAmount: {
+      type: DataTypes.FLOAT,
+      allowNull: false,
+    },
+    OrderStatus: {
+      type: DataTypes.ENUM("Pending", "Shipped", "Completed", "Cancelled"),
+      allowNull: false,
+      defaultValue: "Pending",
+    },
+    ShippingAddress: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    PaymentStatus: {
+      type: DataTypes.ENUM("Paid", "Unpaid", "Pending"),
+      allowNull: false,
+      defaultValue: "Pending",
+    },
   });
+
+  Order.associate = function (models) {
+    Order.belongsTo(models.User, { foreignKey: 'UserID' });
+
+    Order.hasMany(models.OrderItem, { foreignKey: 'OrderID' });
+  };
 
   return Order;
 };

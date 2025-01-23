@@ -1,46 +1,55 @@
 const { db } = require("../db");
+const Utils = require("./utils");
 
-exports.getAllOrders = async (req, res) => {
+exports.getAll = async (req, res) => {
   const orders = await db.orders.findAll();
   res.send(orders);
 };
 
-exports.getOrderById = async (req, res) => {
+exports.getById = async (req, res) => {
   const order = await db.orders.findByPk(req.params.id);
   if (!order) return res.status(404).send({ error: "Order not found" });
   res.send(order);
 };
 
-exports.createOrder = async (req, res) => {
-  const { BuyerID, OrderDate, TotalAmount, OrderStatus } = req.body;
-  if (!BuyerID || !OrderDate || !TotalAmount || !OrderStatus) {
+exports.create = async (req, res) => {
+  const { UserID, OrderDate, TotalAmount, OrderStatus, ShippingAddress, PaymentStatus } = req.body;
+  if (!UserID || !OrderDate || !TotalAmount || !OrderStatus || !ShippingAddress || !PaymentStatus) {
     return res.status(400).send({ error: "Missing required fields" });
   }
 
   const newOrder = await db.orders.create({
-    BuyerID,
+    UserID,
     OrderDate,
     TotalAmount,
     OrderStatus,
+    ShippingAddress,
+    PaymentStatus
   });
-  res.status(201).send(newOrder);
+
+  res.status(201)
+     .location(`${Utils.getBaseURL(req)}/orders/${newOrder.id}`)
+     .send(newOrder);
 };
 
-exports.updateOrderById = async (req, res) => {
+exports.updateById = async (req, res) => {
   const order = await db.orders.findByPk(req.params.id);
   if (!order) return res.status(404).send({ error: "Order not found" });
 
-  const { BuyerID, OrderDate, TotalAmount, OrderStatus } = req.body;
-  if (!BuyerID || !OrderDate || !TotalAmount || !OrderStatus) {
+  const { UserID, OrderDate, TotalAmount, OrderStatus, ShippingAddress, PaymentStatus } = req.body;
+  if (!UserID || !OrderDate || !TotalAmount || !OrderStatus || !ShippingAddress || !PaymentStatus) {
     return res.status(400).send({ error: "Missing required fields" });
   }
 
-  order.set({ BuyerID, OrderDate, TotalAmount, OrderStatus });
+  order.set({ UserID, OrderDate, TotalAmount, OrderStatus, ShippingAddress, PaymentStatus});
   await order.save();
-  res.send(order);
+
+  res.status(200)
+     .location(`${Utils.getBaseURL(req)}/orders/${order.id}`)
+     .send(order);
 };
 
-exports.deleteOrderById = async (req, res) => {
+exports.deleteById = async (req, res) => {
   const order = await db.orders.findByPk(req.params.id);
   if (!order) return res.status(404).send({ error: "Order not found" });
 
