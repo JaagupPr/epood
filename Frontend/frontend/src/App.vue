@@ -21,6 +21,7 @@ const toggleMenu = () => {
           <RouterLink to="/" aria-label="Go to Home">Home</RouterLink>
           <RouterLink to="/usersView" aria-label="View Users">Users</RouterLink>
           <RouterLink to="/ordersView" aria-label="View Orders">Orders</RouterLink>
+          <RouterLink to="/reviewsView" aria-label="View Reviews">Reviews</RouterLink>
           <RouterLink to="/about" aria-label="Learn About Us">About</RouterLink>
           
         </div>

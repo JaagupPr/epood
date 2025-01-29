@@ -537,10 +537,10 @@ paths:
                                 List of orders:
                                     value: |4-
                                          [
-                                         '1', 
-                                         '2',
-                                         '3',
-                                         '4'
+                                         "OrderID": 1, "TotalAmount": 1459, 
+                                         "OrderID": 2, "TotalAmount": 1780
+                                         "OrderID": 3, "TotalAmount": 2560,
+                                         "OrderID": 4, "TotalAmount": 3120,
                                          ]
                     description: Return a list of all orders in the system.
             summary: Get list of all orders
@@ -769,6 +769,252 @@ paths:
                     type: integer
                 in: path
                 required: true
+    /reviews:
+        get:
+            tags:
+                - reviews
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    type: string
+                            examples:
+                                List of reviews:
+                                    value: |4-
+                                           [
+                                            "ReviewID: 1, Rating: 4",
+                                            "ReviewID: 2, Rating: 1",
+                                            "ReviewID: 3, Rating: 2",
+                                            "ReviewID: 4, Rating: 3"
+                                            ]
+                    description: Return list of reviews
+            summary: Get list of all reviews from api
+            description: Returns a list of all reviews in the system
+        post:
+            requestBody:
+                description: Data of the review to be added
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/review'
+                        examples:
+                            Example of a review:
+                                value:
+                                    ReviewID: 1
+                                    ProductID: 101
+                                    UserID: 42
+                                    Rating: 5
+                                    Comment: 'Great product, highly recommend!'
+                required: true
+            tags:
+                - reviews
+            responses:
+                '201':
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    type: string
+                            examples:
+                                'User that is to be added ':
+                                    value:
+                                        ReviewID: 1
+                                        ProductID: 101
+                                        UserID: 42
+                                        Rating: 5
+                                        Comment: 'Great product, highly recommend!'
+                    description: 'Return code 201, if review was added successfully'
+                '400':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/error'
+                            examples:
+                                Missing parameters:
+                                    value:
+                                        error: One or multiple parameters missing
+                    description: 'Return code 400, if request is missing a required data field'
+            summary: add a new review
+            description: adds a new review to the system
+    '/reviews/{id}':
+        get:
+            tags:
+                - reviews
+            parameters:
+                -
+                    examples:
+                        Example of Id of Product:
+                            value: '1'
+                    name: id
+                    description: Id of Review the user has requested
+                    schema:
+                        type: integer
+                    in: path
+                    required: true
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    type: string
+                            examples:
+                                Example of Id of review:
+                                    value:
+                                        ReviewID: 1
+                                        ProductID: 101
+                                        UserID: 42
+                                        Rating: 5
+                                        Comment: 'Great product, highly recommend!'
+                    description: returns details of the review to the user
+                '400':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/error'
+                            examples:
+                                No id of review given:
+                                    value:
+                                        error: Review id not given
+                    description: 'Return code 400, if ID of review is not given'
+                '404':
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    type: string
+                            examples:
+                                'review list not found ':
+                                    value:
+                                        error: Review list was not found
+                    description: return details of the review to the user
+            summary: Get full details of a review
+            description: Returns full details of a given id review
+        put:
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/review'
+                        examples:
+                            Example of a review:
+                                value:
+                                    ReviewID: 1
+                                    ProductID: 101
+                                    UserID: 42
+                                    Rating: 5
+                                    Comment: 'Great product, highly recommend!'
+                required: true
+            tags:
+                - reviews
+            parameters:
+                -
+                    examples:
+                        Example of Id of Review:
+                            value: '1'
+                    name: id
+                    description: Example of id of review
+                    schema:
+                        type: integer
+                    in: path
+                    required: true
+            responses:
+                '201':
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    type: string
+                            examples:
+                                Example of a review:
+                                    value: |4-
+                                            {
+                                                "ReviewID": 1,
+                                                "ProductID": 101,
+                                                "UserID": 42,
+                                                "Rating": 5,
+                                                "Comment": "Great product, highly recommend!"
+                                            }
+                    description: Returns the modified Review to the user
+                '400':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/error'
+                            examples:
+                                Missing parameters:
+                                    value:
+                                        error: One or multiple parameters missing
+                    description: |
+                        User has not added required parameters to the modified Review
+                '404':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/error'
+                            examples:
+                                Missing parameters:
+                                    value:
+                                        error: One or multiple parameters missing
+                    description: The Review to be updated is not found in the array
+            operationId: Id
+            summary: Update a review
+            description: 'Returns updated review, when modification of a review is successful.'
+        delete:
+            tags:
+                - reviews
+            parameters:
+                -
+                    examples:
+                        Example of Id of Review:
+                            value: '1'
+                    name: id
+                    description: Id of review the user has requested
+                    schema:
+                        type: integer
+                    in: path
+                    required: true
+            responses:
+                '204':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/error'
+                            examples:
+                                Successful error:
+                                    value:
+                                        error: no content
+                    description: 'returned error, in case deletion was successful'
+                '404':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/error'
+                            examples:
+                                Review with this id was not found:
+                                    value:
+                                        error: Review not found
+                    description: Review with this id was not found
+            summary: Delete a specific review
+            description: Deletes a review from the array based on given id
+        parameters:
+            -
+                examples:
+                    Example of Id of Review:
+                        value: '1'
+                name: id
+                description: Example of id of product
+                schema:
+                    type: integer
+                in: path
+                required: true
 components:
     schemas:
         error:
@@ -888,23 +1134,24 @@ components:
             type: object
             properties:
                 UserID:
-                    description: Id of a user
-                    type: string
+                    description: ID of the user who placed the order
+                    type: integer
                 OrderDate:
-                    format: date-time
-                    description: Date of a order
+                    format: date
+                    description: The date and time the order was placed
                     type: string
                 TotalAmount:
-                    description: ''
-                    type: string
+                    format: float
+                    description: The total amount of the order in EUR.
+                    type: number
                 OrderStatus:
-                    description: ''
+                    description: The current status of the order.
                     type: string
                 ShippingAddress:
-                    description: ''
+                    description: The shipping address for the order.
                     type: string
                 PaymentStatus:
-                    description: ''
+                    description: The payment status of the order.
                     type: string
             example:
                 UserID: 1
@@ -913,3 +1160,41 @@ components:
                 OrderStatus: Completed
                 ShippingAddress: '1234 Elm Street, New York, China'
                 PaymentStatus: Paid
+        review:
+            description: Example of a valid review
+            required:
+                - ReviewID
+                - ProductID
+                - UserID
+                - Rating
+                - Comment
+            type: object
+            properties:
+                ReviewID:
+                    description: The unique identifier for the review.
+                    type: integer
+                    example: '1'
+                ProductID:
+                    description: The unique identifier of the product being reviewed.
+                    type: integer
+                    example: '101'
+                UserID:
+                    description: The unique identifier of the user who created the review.
+                    type: integer
+                    example: '42'
+                Rating:
+                    description: The rating given by the user (1-5).
+                    type: integer
+                    example: '5'
+                Comment:
+                    description: The comment provided by the user about the product.
+                    type: string
+                    example: |
+                        "Great product, highly recommend!"
+            example:
+                -
+                    ReviewID: 1
+                    ProductID: 101
+                    UserID: 42
+                    Rating: 5
+                    Comment: 'Great product, highly recommend!'
