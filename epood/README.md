@@ -6,6 +6,8 @@ how to run, and where its api and trello team resources are
 how to run:
 - Open terminal in backend folder
 - use nodemon . to run backend
+- Open terminal in project general folder
+- use command npm start to run backend and frontend simoultaneously
 
 team resources:
 https://studio.apicur.io/apis/112935/
