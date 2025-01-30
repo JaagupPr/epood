@@ -2,7 +2,7 @@
 export default {
     name: "UsersTable",
     props: {
-        items: Array
+        items: Object
     }
 }
 </script>

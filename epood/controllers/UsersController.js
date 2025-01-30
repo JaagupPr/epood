@@ -51,7 +51,7 @@ exports.editById = async (req, res) => {
 };
 
 exports.deleteById = async (req, res) => {
-  const user = await db.users.findByPk(req.params.id);
+  const user = await db.users.findByPk(req.params.UserID);
   if (!user) return res.status(404).send({ error: "User not found" });
   await user.destroy();
   res.status(204).send();
