@@ -13,4 +13,4 @@ team resources:
 https://studio.apicur.io/apis/112935/
 https://trello.com/b/ucAJUB5Z
 
-![Shop](https://github.com/user-attachments/assets/d528c94c-15c3-443b-b92f-e263cf20437f)
+![image](https://github.com/user-attachments/assets/a2ffa9d6-c81e-4464-8bc3-88db330c100f)
