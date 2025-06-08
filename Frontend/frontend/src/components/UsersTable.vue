@@ -1,40 +1,48 @@
+<!-- UsersTable.vue -->
 <script>
 export default {
     name: "UsersTable",
     props: {
-        items: Object
+        items: Array
     }
 }
 </script>
 
 <template>
-    <table class="table table-striped">
-        <thead class="table-dark">
-            <tr>
-                <th>FirstName</th>
-                <th>LastName</th>
-                <th>Email</th>
-                <th>PhoneNumber</th>
-                <th>Address</th>
-                <th>UserType</th>
-                <th>Password</th>
-
-            </tr>
-        </thead>
-        <tbody>
-            <tr v-for="item in items" :key="item.UserID">
-                <td>{{ item.FirstName }}</td>
-                <td>{{ item.LastName }}</td>
-                <td>{{ item.Email }}</td>
-                <td>{{ item.PhoneNumber }}</td>
-                <td>{{ item.Address }}</td>
-                <td>{{ item.UserType }}</td>
-                <td>{{ item.Password }}</td>
-
-            </tr>
-        </tbody>
-    </table>
+    <div class="table-responsive">
+        <table class="app-table">
+            <thead>
+                <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Address</th>
+                    <th>User Type</th>
+                    <th>Password</th>
+                    <th>SecureLevel</th>
+                    <th>LevelKey</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="item in items" :key="item.UserID">
+                    <td>{{ item.FirstName }}</td>
+                    <td>{{ item.LastName }}</td>
+                    <td>{{ item.Email }}</td>
+                    <td>{{ item.PhoneNumber }}</td>
+                    <td>{{ item.Address }}</td>
+                    <td>
+                        <span :class="['table-type', item.UserType.toLowerCase()]">
+                            {{ item.UserType }}
+                        </span>
+                    </td>
+                    <td>••••••••</td>
+                    <td>{{ item.SecureLevel }}</td>
+                    <td>{{ item.LevelKey }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </template>
 
-<style scoped>
-</style>
+<style src="@/assets/table.css"></style>

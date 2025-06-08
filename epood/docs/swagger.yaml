@@ -294,12 +294,20 @@ paths:
                 content:
                     application/json:
                         schema:
-                            $ref: '#/components/schemas/error'
+                            $ref: '#/components/schemas/user'
                         examples:
                             Example of  a user:
                                 value:
-                                    -
-                                        error: one or multiple parameters missing
+                                    UserID: 4
+                                    FirstName: Mark
+                                    LastName: Zuckerberg
+                                    Email: Mark.Zuckerberg@gmail.com
+                                    PhoneNumber: '+44777123234'
+                                    Address: 'Palo Alto, California, USA'
+                                    UserType: Seller
+                                    Password: ••••••••
+                                    SecureLevel: 0
+                                    LevelKey: 0-0
                 required: true
             tags:
                 - users
@@ -321,7 +329,9 @@ paths:
                                         PhoneNumber: '+44777123234'
                                         Address: 'Palo Alto, California, USA'
                                         UserType: Seller
-                                        Password: Jicnaoxqp012o
+                                        Password: ••••••••
+                                        SecureLevel: 0
+                                        LevelKey: 0-0
                     description: 'Return code 201, if user was added successfully'
                 '400':
                     content:
@@ -365,7 +375,9 @@ paths:
                                         PhoneNumber: '+44777123234'
                                         Address: 'Palo Alto, California, USA'
                                         UserType: Seller
-                                        Password: Jicnaoxqp012o
+                                        Password: ••••••••
+                                        SecureLevel: 0
+                                        LevelKey: 0-0
                     description: Returns a single user with details by its ID.
                 '400':
                     content:
@@ -405,6 +417,9 @@ paths:
                                     PhoneNumber: '+44777123234'
                                     Address: 'Palo Alto, California, USA'
                                     UserType: Seller
+                                    Password: ••••••••
+                                    SecureLevel: 0
+                                    LevelKey: 0-0
                 required: true
             tags:
                 - users
@@ -437,7 +452,9 @@ paths:
                                         PhoneNumber: '+44777123234'
                                         Address: 'Palo Alto, California, USA'
                                         UserType: Seller
-                                        Password: Jicnaoxqp012o
+                                        Password: ••••••••
+                                        SecureLevel: 0
+                                        LevelKey: 0-0
                     description: 'Returns the modified user '
                 '400':
                     content:
@@ -1015,158 +1032,6 @@ paths:
                     type: integer
                 in: path
                 required: true
-    /orderitems:
-        get:
-            tags:
-                - OrderItems
-            responses:
-                '200':
-                    content:
-                        application/json:
-                            schema:
-                                type: array
-                                items:
-                                    $ref: '#/components/schemas/orderitem'
-                    description: A list of order items.
-            summary: Get all order items
-            description: Returns a list of all order items.
-        post:
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: '#/components/schemas/orderitem'
-                        examples:
-                            Example of order item in the system:
-                                value:
-                                    OrderID: 124
-                                    ProductID: 456
-                                    Quantity: 2
-                                    Price: 25.99
-                required: true
-            tags:
-                - OrderItems
-            responses:
-                '201':
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/orderitem'
-                            examples:
-                                Example:
-                                    value:
-                                        OrderID: 124
-                                        ProductID: 456
-                                        Quantity: 2
-                                        Price: 25.99
-                    description: Order item created successfully.
-                '400':
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/error'
-                    description: Bad request. Missing or invalid parameter
-            summary: Create a new order item
-            description: Adds a new order item to the system.
-    '/orderitems/{Id}':
-        get:
-            tags:
-                - OrderItems
-            parameters:
-                -
-                    name: Id
-                    description: The ID of the order item to retrieve.
-                    schema:
-                        type: integer
-                    in: path
-                    required: true
-            responses:
-                '200':
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/orderitem'
-                    description: Details of the order item.
-                '404':
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/error'
-                    description: Order item not found.
-            summary: Get an order item by ID
-            description: Returns details of a specific order item.
-        put:
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: '#/components/schemas/orderitem'
-                        examples:
-                            example:
-                                value:
-                                    OrderID: 124
-                                    ProductID: 456
-                                    Quantity: 2
-                                    Price: 25.99
-                required: true
-            tags:
-                - OrderItems
-            parameters:
-                -
-                    name: Id
-                    description: the ID of the order item to update.
-                    schema:
-                        type: integer
-                    in: path
-                    required: true
-            responses:
-                '200':
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/orderitem'
-                    description: Order item updated successfully.
-                '400':
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/error'
-                    description: Bad request. Missing or invalid parameter
-                '404':
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/error'
-                    description: Order item not found.
-            summary: Update an order item
-            description: Updates an existing order item.
-        delete:
-            tags:
-                - OrderItems
-            parameters:
-                -
-                    name: Id
-                    description: the ID of the order item to delete.
-                    schema:
-                        type: integer
-                    in: path
-                    required: true
-            responses:
-                '204':
-                    description: Order item deleted successfully.
-                '404':
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/error'
-                    description: Order item was not found
-            summary: Delete an order item
-            description: Deletes an order item from the system.
-        parameters:
-            -
-                name: Id
-                in: path
-                required: true
 components:
     schemas:
         error:
@@ -1235,6 +1100,8 @@ components:
                 - Address
                 - UserType
                 - Password
+                - SecureLevel
+                - LevelKey
             type: object
             properties:
                 UserID:
@@ -1263,17 +1130,23 @@ components:
                     format: password
                     description: ' Users password for authentication'
                     type: string
-            example: |-
-                {
-                    "UserID": 4,
-                    "FirstName": "Mark",
-                    "LastName": "Zuckerberk",
-                    "Email": "Mark.Zuckerberg@gmail.com",
-                    "PhoneNumber": "+44777123234",
-                    "Address": "Palo Alto, California, USA",
-                    "UserType": "Seller"
-                    "Password": "dlkowekw32"
-                }
+                SecureLevel:
+                    description: ' SecureLevel'
+                    type: integer
+                LevelKey:
+                    description: ' Level of access'
+                    type: string
+            example:
+                UserID: 4
+                FirstName: Mark
+                LastName: Zuckerberk
+                Email: Mark.Zuckerberg@gmail.com
+                PhoneNumber: '+44777123234'
+                Address: 'Palo Alto, California, USA'
+                UserType: Seller
+                Password: dlkowekw32
+                SecureLevel: 0
+                LevelKey: 0-0
         order:
             description: Example of valid order.
             required:
@@ -1350,34 +1223,4 @@ components:
                     UserID: 42
                     Rating: 5
                     Comment: 'Great product, highly recommend!'
-        orderitem:
-            description: Represents an item in an order. linking a product to an order.
-            required:
-                - OrderID
-                - ProductID
-                - Quantity
-                - Price
-            type: object
-            properties:
-                OrderItemID:
-                    description: The unique identifier for the order item.
-                    type: integer
-                OrderID:
-                    description: The ID of the order this item belongs to
-                    type: integer
-                ProductID:
-                    description: The ID of the product in this order item.
-                    type: integer
-                Quantity:
-                    description: The quantity of the product in this order
-                    type: integer
-                Price:
-                    format: float
-                    description: The price of the product in this order item.
-                    type: number
-            example:
-                OrderItemID: 1
-                OrderID: 123
-                ProductID: 456
-                Quantity: 2
-                Price: 29.99
+

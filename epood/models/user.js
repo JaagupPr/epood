@@ -27,14 +27,24 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false 
     },
     UserType: { 
-      type: DataTypes.ENUM("Buyer", "Seller"), 
+      type: DataTypes.ENUM("Buyer", "Seller", "Admin"), 
       allowNull: false 
     },
     Password: { 
       type: DataTypes.STRING, 
       allowNull: false 
+    },
+    SecureLevel: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 0
+    },
+    LevelKey: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      defaultValue: '0-0'
     }
   });
-
+  
   return User;
 };
