@@ -22,8 +22,6 @@ db.products = require("./models/product")(sequelize, DataTypes);
 db.users = require("./models/user")(sequelize, DataTypes);
 db.orders = require("./models/order")(sequelize, DataTypes);
 db.reviews = require("./models/review")(sequelize, DataTypes);
-db.OrderItems = require("./models/orderItem")(sequelize, DataTypes);
-
 
 
 const sync = (async () => {
@@ -31,4 +29,4 @@ const sync = (async () => {
     console.log("models have been synchronised successfully")
 });
 
-module.exports = {db, sync};    
+module.exports = {db, sync};

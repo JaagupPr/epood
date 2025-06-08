@@ -1,40 +1,54 @@
 <script>
 export default {
-    name: "OrdersTable",
-    props: {
-        items: Object
+  name: "OrdersTable",
+  props: {
+    items: Array
+  },
+  methods: {
+    formatDate(dateString) {
+      const options = {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      };
+      return new Date(dateString).toLocaleDateString(undefined, options);
+    },
+    formatCurrency(amount) {
+      return new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'EUR'
+      }).format(amount);
     }
-}
+  }
+};
 </script>
 
 <template>
-    <table class="table table-striped">
-        <thead class="table-dark">
-            <tr>
-                <th>UserID</th>
-                <th>OrderDate</th>
-                <th>TotalAmount</th>
-                <th>OrderStatus</th>
-                <th>ShippingAddress</th>
-                <th>PaymentStatus</th>
-
-
-
-            </tr>
-        </thead>
-        <tbody>
-            <tr v-for="item in items" :key="item.OrderID">
-                <td>{{ item.UserID }}</td>
-                <td>{{ item.OrderDate }}</td>
-                <td>{{ item.TotalAmount }}</td>
-                <td>{{ item.OrderStatus }}</td>
-                <td>{{ item.ShippingAddress }}</td>
-                <td>{{ item.PaymentStatus }}</td>
-
-            </tr>
-        </tbody>
+  <div class="table-responsive">
+    <table class="app-table">
+      <thead>
+        <tr>
+          <th>Order Date</th>
+          <th>Total Amount</th>
+          <th>Status</th>
+          <th>Payment</th>
+          <th>Shipping Address</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="item in items" :key="item.OrderID">
+          <td>{{ formatDate(item.OrderDate) }}</td>
+          <td>{{ formatCurrency(item.TotalAmount) }}</td>
+          <td>{{ item.OrderStatus }}</td>
+          <td>{{ item.PaymentStatus }}</td>
+          <td>{{ item.ShippingAddress }}</td>
+        </tr>
+      </tbody>
     </table>
+  </div>
 </template>
 
-<style scoped>
-</style>
+
+<style src="@/assets/table.css"></style>
