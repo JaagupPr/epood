@@ -27,17 +27,18 @@ module.exports = (sequelize, DataTypes) => {
       Comment: {
         type: DataTypes.TEXT,
         allowNull: false,
+        validate: {
+          notEmpty: true
       },
     },
-    {
-      timestamps: false,
+
     }
   );
 
-  Review.associate = function (models) {
-    Review.belongsTo(models.Product, { foreignKey: 'ProductID' });
-    Review.belongsTo(models.User, { foreignKey: 'UserID' });
-  };
+ Review.associate = function (models) {
+  Review.belongsTo(models.Product, { foreignKey: 'ProductID' });
+  Review.belongsTo(models.User, { foreignKey: 'UserID' });
+};
 
   return Review;
 };
