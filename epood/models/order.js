@@ -36,15 +36,10 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: "Pending",
     },
   });
-
-Order.associate = function (models) {
-  Order.belongsTo(models.User, {
-    foreignKey: 'UserID',
-    onDelete: 'CASCADE',
-  });
-    User.hasMany(models.Order, {
-    foreignKey: 'UserID',
-    onDelete: 'CASCADE',
+  Order.associate = function (models) {
+    Order.belongsTo(models.User, {
+      foreignKey: 'UserID',
+      onDelete: 'CASCADE',
   });
     
   };

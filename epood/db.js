@@ -22,6 +22,7 @@ db.products = require("./models/product")(sequelize, DataTypes);
 db.users = require("./models/user")(sequelize, DataTypes);
 db.orders = require("./models/order")(sequelize, DataTypes);
 db.reviews = require("./models/review")(sequelize, DataTypes);
+db.OrderItems = require("./models/orderitem")(sequelize, DataTypes);
 
 
 const sync = (async () => {

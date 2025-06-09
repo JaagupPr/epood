@@ -1032,6 +1032,147 @@ paths:
                     type: integer
                 in: path
                 required: true
+    '/orderitems/{Id}':
+        get:
+            tags:
+                - OrderItems
+            parameters:
+                -
+                    name: Id
+                    description: The ID of the order item to retrieve.
+                    schema:
+                        type: integer
+                    in: path
+                    required: true
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/orderitem'
+                    description: Details of the order item.
+                '404':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/error'
+                    description: Order item not found.
+            summary: Get an order item by ID
+            description: Return details of a specific order item.
+        put:
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/orderitem'
+                required: true
+            tags:
+                - OrderItems
+            parameters:
+                -
+                    name: Id
+                    description: the ID of the order item to update.
+                    schema:
+                        type: integer
+                    in: path
+                    required: true
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/orderitem'
+                    description: Order item updated successfully.
+                '400':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/error'
+                    description: Bad request. Missing or invaild parameter
+                '404':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/error'
+                    description: Order item not found.
+            summary: Update an order item
+            description: Updates an existing order item.
+        delete:
+            tags:
+                - OrderItems
+            parameters:
+                -
+                    name: Id
+                    description: the ID of the order item to delete.
+                    schema:
+                        type: integer
+                    in: path
+                    required: true
+            responses:
+                '204':
+                    description: Order item deleted successfully
+                '404':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/error'
+                    description: Order item was not found
+            summary: Delete an order item
+            description: Deletes an order item from the system.
+        parameters:
+            -
+                name: Id
+                description: The ID of the order item to update
+                schema:
+                    type: integer
+                in: path
+                required: true
+    /orderitems:
+        get:
+            tags:
+                - OrderItems
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/schemas/orderitem'
+                    description: Returns a list of all order items.
+            summary: Get all order items
+            description: Returns a list of all order items.
+        post:
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/orderitem'
+                        examples:
+                            Example of order item in the system:
+                                value:
+                                    OrderID: 2
+                                    ProductID: 3
+                                    Quantity: 20
+                                    Price: 299
+                required: true
+            tags:
+                - OrderItems
+            responses:
+                '201':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/orderitem'
+                    description: Order item created successfully.
+                '400':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/error'
+                    description: Bad request. Missing or invalid parameter
+            summary: Create a new order item
+            description: Adds a new order item to the system.
 components:
     schemas:
         error:
@@ -1223,4 +1364,35 @@ components:
                     UserID: 42
                     Rating: 5
                     Comment: 'Great product, highly recommend!'
-
+        orderitem:
+            description: ''
+            required:
+                - OrderItemID
+                - ProductID
+                - Quantity
+                - Price
+                - OrderID
+            type: object
+            properties:
+                OrderItemID:
+                    description: The unique identifier for the order item.
+                    type: integer
+                OrderID:
+                    description: The ID of the order this item belongs to
+                    type: integer
+                ProductID:
+                    description: The ID of the product in this order item.
+                    type: integer
+                Quantity:
+                    description: The quantity of the product in this order
+                    type: integer
+                Price:
+                    format: float
+                    description: The price of the product in this order item.
+                    type: number
+            example:
+                OrderItemID: 1
+                OrderID: 2
+                ProductID: 20
+                Quantity: 2
+                Price: 299

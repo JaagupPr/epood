@@ -32,6 +32,13 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     timestamps: false,
   });
+  Product.associate = function (models) {
+    Product.hasMany(models.Review, {
+      foreignKey: 'ProductID',
+      onDelete: 'CASCADE',
+  });
+};
+
 
   return Product;
 };

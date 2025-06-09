@@ -45,6 +45,18 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: '0-0'
     }
   });
+  User.associate = function (models) {
+  User.hasMany(models.Review, {
+    foreignKey: 'UserID',
+    onDelete: 'CASCADE',
+  });
+
+  User.hasMany(models.Order, {
+    foreignKey: 'UserID',
+    onDelete: 'CASCADE',
+  });
+};
+
   
   return User;
 };

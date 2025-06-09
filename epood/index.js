@@ -22,6 +22,7 @@ require("./routes/productRoutes")(app);
 require("./routes/userRoutes")(app);
 require("./routes/orderRoutes")(app);
 require("./routes/reviewRoutes")(app);
+require("./routes/orderitemRoutes")(app);
 
 app.listen(port, async () => {
   if (process.env.SYNC === 'true') {
