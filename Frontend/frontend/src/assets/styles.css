@@ -4,14 +4,14 @@
   justify-content: space-between;
   align-items: flex-start;
   padding: 1rem;
-  padding-top: 80px;
+  padding-top: 20px;
   gap: 1rem;
   max-width: 100%;
   box-sizing: border-box;
 }
 
 .table-section {
-  flex: 2;
+  flex: 1.7;
   background: #111;
   padding: 1rem;
   border-radius: 8px;

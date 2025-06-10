@@ -3,7 +3,7 @@ const Utils = require("./utils");
 
 exports.getAll = async (req, res) => {
   try {
-    const orderItems = await db.OrderItems.findAll();
+    const orderItems = await db.orderitems.findAll();
     res.send(orderItems);
   } catch (err) {
     res.status(400).send({ error: "An error occurred while fetching order items." });
@@ -18,7 +18,7 @@ exports.getById = async (req, res) => {
   }
 
   try {
-    const orderItem = await db.OrderItems.findByPk(idNumber);
+    const orderItem = await db.orderitems.findByPk(idNumber);
     if (!orderItem) {
       return res.status(404).send({ error: "Order item not found." });
     }
@@ -36,8 +36,8 @@ exports.create = async (req, res) => {
   }
 
   try {
-    console.log(db.OrderItems);
-    const newOrderItem = await db.OrderItems.create({
+    console.log(db.orderitems);
+    const newOrderItem = await db.orderitems.create({
       OrderID,
       ProductID,
       Quantity,
@@ -61,7 +61,7 @@ exports.updateById = async (req, res) => {
   }
 
   try {
-    const orderItem = await db.OrderItems.findByPk(req.params.id);
+    const orderItem = await db.orderitems.findByPk(req.params.id);
     if (!orderItem) return res.status(404).send({ error: "Order item not found" });
 
     orderItem.set({ OrderID, ProductID, Quantity, Price });
@@ -77,7 +77,7 @@ exports.updateById = async (req, res) => {
 
 exports.deleteById = async (req, res) => {
   try {
-    const orderItem = await db.OrderItems.findByPk(req.params.id);
+    const orderItem = await db.orderitems.findByPk(req.params.id);
     if (!orderItem) return res.status(404).send({ error: "Order item not found" });
 
     await orderItem.destroy();

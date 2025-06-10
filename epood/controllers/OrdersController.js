@@ -28,7 +28,7 @@ exports.create = async (req, res) => {
   });
 
   res.status(201)
-     .location(`${Utils.getBaseURL(req)}/orders/${newOrder.id}`)
+     .location(`${Utils.getBaseURL(req)}/orders/${newOrder.OrderID}`)
      .send(newOrder);
 };
 
@@ -41,11 +41,11 @@ exports.updateById = async (req, res) => {
     return res.status(400).send({ error: "Missing required fields" });
   }
 
-  order.set({ UserID, OrderDate, TotalAmount, OrderStatus, ShippingAddress, PaymentStatus});
+  order.set({ UserID, OrderDate, TotalAmount, OrderStatus, ShippingAddress, PaymentStatus });
   await order.save();
 
   res.status(200)
-     .location(`${Utils.getBaseURL(req)}/orders/${order.id}`)
+     .location(`${Utils.getBaseURL(req)}/orders/${order.OrderID}`)
      .send(order);
 };
 

@@ -79,7 +79,7 @@ export default {
       }
     },
     async editUser() {
-      if (!this.userIdToEdit) return alert('Select a user to edit.');
+
       try {
         const data = { ...this.userToEdit };
         if (!data.Password) delete data.Password;
@@ -99,7 +99,6 @@ export default {
       }
     },
     async deleteUser(id) {
-      if (!id) return alert('Select a user to delete.');
       if (!confirm('Are you sure you want to delete this user?')) return;
       try {
         const res = await fetch(`http://localhost:8080/users/${id}`, {
@@ -165,7 +164,7 @@ export default {
             <option value="Seller">Seller</option>
             <option value="Admin">Admin</option>
           </select>
-          <input v-model="userToEdit.Password" type="password" placeholder="Password (optional)" />
+          <input v-model="userToEdit.Password" type="password" placeholder="Password " />
           <button type="submit">Update</button>
         </form>
       </div>
