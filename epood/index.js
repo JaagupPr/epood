@@ -1,6 +1,6 @@
 require('dotenv').config();
 
-const port = process.env.PORT || 3001;
+const port = process.env.PORT || 8080;
 const host = 'localhost';
 const express = require('express');
 const cors = require('cors');
@@ -23,6 +23,8 @@ require("./routes/userRoutes")(app);
 require("./routes/orderRoutes")(app);
 require("./routes/reviewRoutes")(app);
 require("./routes/orderitemRoutes")(app);
+require("./routes/productuserRoutes")(app);
+
 
 app.listen(port, async () => {
   if (process.env.SYNC === 'true') {
