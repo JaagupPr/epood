@@ -11,6 +11,6 @@ how to run:
 
 team resources:
 https://studio.apicur.io/apis/112935/
-https://trello.com/b/ucAJUB5Z
+https://trello.com/b/aw5uV9yN/epood-api
 
-![image](https://github.com/user-attachments/assets/a2ffa9d6-c81e-4464-8bc3-88db330c100f)
+![image](https://github.com/user-attachments/assets/884e44a9-9ba2-4e1f-af5a-ed66ee92c8be)
